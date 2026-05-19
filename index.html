@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Depuis Nantes, nous réalisons des ouvrages en pierre naturelle, de la restauration historique à la création contemporaine.">
+<meta property="og:title" content="David Guillemand Taille de pierres — Le savoir-faire de la pierre, entre tradition et modernité.">
+<meta property="og:image" content="https://images.pexels.com/photos/29471224/pexels-photo-29471224.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='8' fill='%236B5B5B'/%3E%3Ctext x='50' y='68' font-family='sans-serif' font-size='60' font-weight='700' fill='%23B8860B' text-anchor='middle'%3ED%3C/text%3E%3C/svg%3E">
+<title>David Guillemand Taille de pierres — Le savoir-faire de la pierre, entre tradition et modernité.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Merriweather:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{--p:#6B5B5B;--a:#B8860B;--bg:#FAF8F5;--bg2:#E0E0E0;--tx:#333333;--tm:#888888;--fh:'Playfair Display',sans-serif;--fb:'Merriweather',sans-serif;--r:8px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--tx);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--fh);font-weight:700;line-height:1.1;letter-spacing:-.025em}
+.container{max-width:1160px;margin:0 auto;padding:0 32px}
+ 
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--p);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;height:60px}
+.nav-brand{font-family:var(--fh);font-size:16px;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.06em}
+.nav-links{display:flex;gap:24px}
+.nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:.02em;transition:color .2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{padding:9px 18px;border:1.5px solid var(--a);color:var(--a);border-radius:var(--r);font-size:13px;font-weight:700;text-decoration:none;transition:all .2s;letter-spacing:.02em}
+.nav-cta:hover{background:var(--a);color:#fff}
+@media(max-width:768px){.nav-links{display:none}}
+ 
+/* HERO — text dominant */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:0;overflow:hidden;background:var(--p)}
+.hero-text{padding:100px 64px 80px max(32px, calc((100vw - 1160px) / 2 + 32px));display:flex;flex-direction:column;justify-content:center}
+.hero-eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--a);margin-bottom:28px;display:flex;align-items:center;gap:12px}
+.hero-eyebrow::before{content:'';width:32px;height:1.5px;background:var(--a)}
+.hero h1{font-size:clamp(32px,4vw,60px);color:#fff;margin-bottom:24px;line-height:1.05}
+.hero h1 em{color:var(--a);font-style:normal}
+.hero-sub{font-size:clamp(15px,1.1vw,18px);color:rgba(255,255,255,.6);margin-bottom:40px;line-height:1.7;max-width:480px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.btn{padding:13px 26px;border-radius:var(--r);font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;border:none;transition:all .2s;letter-spacing:.02em;font-family:var(--fb)}
+.btn-primary{background:var(--a);color:#fff}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.75);border:1.5px solid rgba(255,255,255,.2)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.6);color:#fff}
+.hero-visual{height:100vh;position:relative;overflow:hidden}
+.hero-visual img{width:100%;height:100%;object-fit:cover;opacity:.6}
+.hero-visual::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--p) 0%,transparent 40%);z-index:1}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-visual{display:none}.hero-text{padding:100px 0 80px}}
+ 
+/* KEY FIGURES */
+.kf-bar{background:var(--a);padding:24px 0}
+.kf-grid{display:flex;justify-content:space-around;align-items:center;gap:20px;flex-wrap:wrap}
+.kf-item{text-align:center;color:#fff}
+.kf-value{font-family:var(--fh);font-size:36px;font-weight:800;line-height:1;margin-bottom:4px}
+.kf-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;opacity:.85}
+ 
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.about-text p{font-size:16px;color:var(--tm);margin-bottom:18px;line-height:1.7}
+.about-certs{margin-top:28px}
+.cert-item{display:flex;align-items:center;gap:10px;padding:10px 0;font-size:14px;color:var(--tm);border-bottom:1px solid color-mix(in srgb,var(--tx) 6%,transparent)}
+.cert-dot{width:6px;height:6px;border-radius:50%;background:var(--a);flex-shrink:0}
+.about-image{border-radius:var(--r);overflow:hidden;aspect-ratio:16/10;box-shadow:0 16px 48px rgba(0,0,0,.12)}
+.about-image img{width:100%;height:100%;object-fit:cover}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px;padding-top:48px;border-top:2px solid color-mix(in srgb,var(--tx) 8%,transparent)}
+.stat{text-align:center}
+.stat-value{font-family:var(--fh);font-size:52px;font-weight:800;color:var(--a);line-height:1;display:block}
+.stat-label{font-size:12px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:8px}
+@media(max-width:768px){.about-grid{grid-template-columns:1fr}.about-stats{grid-template-columns:1fr}}
+ 
+/* EXPERTISE */
+.expertise-list{display:flex;flex-direction:column;gap:0}
+.expertise-item{display:grid;grid-template-columns:56px 1fr;gap:28px;padding:32px 0;border-bottom:1px solid color-mix(in srgb,var(--tx) 8%,transparent);align-items:start;transition:background .2s}
+.expertise-item:first-child{border-top:1px solid color-mix(in srgb,var(--tx) 8%,transparent)}
+.exp-num{font-family:var(--fh);font-size:13px;font-weight:800;color:var(--a);letter-spacing:.06em;padding-top:4px;text-transform:uppercase}
+.exp-title{font-size:22px;margin-bottom:10px;transition:color .2s}
+.exp-desc{font-size:15px;color:var(--tm);line-height:1.7}
+.expertise-item:hover .exp-title{color:var(--a)}
+ 
+/* METHOD */
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:color-mix(in srgb,var(--tx) 8%,transparent);border-radius:var(--r);overflow:hidden}
+.method-step{padding:36px;background:var(--bg);transition:background .2s}
+.method-step:hover{background:var(--bg2)}
+.method-num{font-family:var(--fh);font-size:42px;font-weight:800;color:var(--a);opacity:.25;line-height:1;margin-bottom:16px}
+.method-title{font-size:20px;margin-bottom:10px}
+.method-desc{font-size:14px;color:var(--tm);line-height:1.6}
+@media(max-width:640px){.method-grid{grid-template-columns:1fr}}
+ 
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.testimonial{padding:32px;border-radius:var(--r);background:var(--bg2);border:1px solid transparent;transition:all .3s;position:relative}
+.testimonial:hover{border-color:color-mix(in srgb,var(--a) 25%,transparent);transform:translateY(-2px)}
+.t-open-quote{font-family:var(--fh);font-size:64px;color:var(--a);opacity:.15;position:absolute;top:16px;right:20px;line-height:.8}
+.t-text{font-size:15px;color:var(--tx);line-height:1.7;margin-bottom:20px;font-style:italic}
+.t-author{display:flex;align-items:center;gap:12px}
+.t-initials{width:40px;height:40px;border-radius:50%;background:var(--a);display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
+.t-name{font-weight:700;font-size:14px}
+.t-role{font-size:13px;color:var(--tm)}
+ 
+/* FAQ */
+.faq-wrap{max-width:720px;margin:0 auto}
+.faq-item{border-bottom:1px solid color-mix(in srgb,var(--tx) 8%,transparent)}
+.faq-q{width:100%;padding:22px 0;background:none;border:none;font-family:var(--fh);font-size:19px;font-weight:700;color:var(--tx);text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:color .2s;letter-spacing:-.01em}
+.faq-q:hover{color:var(--a)}
+.faq-icon{width:22px;height:22px;flex-shrink:0;position:relative}
+.faq-icon::before,.faq-icon::after{content:'';position:absolute;background:currentColor;top:50%;left:50%;transform:translate(-50%,-50%)}
+.faq-icon::before{width:12px;height:1.5px}
+.faq-icon::after{width:1.5px;height:12px;transition:transform .3s}
+.faq-item.active .faq-icon::after{transform:translate(-50%,-50%) rotate(90deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-a-inner{padding-bottom:22px;font-size:15px;color:var(--tm);line-height:1.7}
+ 
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:start}
+.contact-label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--a);margin-bottom:16px;display:block}
+.contact-items{display:flex;flex-direction:column;gap:10px;margin:24px 0}
+.contact-item{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--bg2);border-radius:var(--r);font-size:14px;border:1px solid color-mix(in srgb,var(--tx) 8%,transparent)}
+.contact-item a{color:var(--tx);text-decoration:none;transition:color .2s}
+.contact-item a:hover{color:var(--a)}
+.ci-icon{color:var(--a);font-size:18px}
+.contact-hours{padding:20px;background:var(--bg2);border-radius:var(--r)}
+.contact-hours-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--a);margin-bottom:12px}
+.hours-row{display:flex;justify-content:space-between;padding:6px 0;font-size:14px;border-bottom:1px solid color-mix(in srgb,var(--tx) 6%,transparent)}
+.hours-row:last-child{border:none}
+.hours-day{font-weight:600}.hours-time{color:var(--tm)}
+#map{width:100%;min-height:400px;border-radius:var(--r);overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.1)}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr}}
+ 
+/* SECTION */
+.section{padding:96px 0}
+.section-alt{background:var(--bg2)}
+.section-dark{background:var(--p)}
+.section-label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--a);margin-bottom:20px;display:block}
+.section-title{font-size:clamp(28px,3.5vw,46px);margin-bottom:14px;max-width:680px;letter-spacing:-.02em}
+.section-subtitle{font-size:16px;color:var(--tm);max-width:540px;margin-bottom:56px}
+ 
+/* FLOATING */
+.floating-actions{position:fixed;bottom:24px;right:24px;z-index:90;display:flex;flex-direction:column;gap:12px}
+.float-btn{width:48px;height:48px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.2);transition:all .25s;text-decoration:none}
+.float-btn:hover{transform:translateY(-2px) scale(1.04)}
+.float-wa{background:#25D366;color:white}.float-wa svg{width:24px;height:24px}
+.float-top{background:var(--p);color:#fff;opacity:0;pointer-events:none;transition:opacity .3s}
+.float-top.visible{opacity:1;pointer-events:auto}
+.float-top svg{width:16px;height:16px}
+ 
+/* FOOTER */
+.footer{background:var(--p);color:rgba(255,255,255,.7);padding:56px 0 24px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand{font-family:var(--fh);font-size:18px;font-weight:800;color:#fff;margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
+.footer-tagline{font-size:13px;opacity:.55;line-height:1.6;max-width:280px}
+.footer-col-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:14px}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:7px}
+.footer-col a{color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;transition:color .2s}
+.footer-col a:hover{color:var(--a)}
+.footer-bottom{display:flex;justify-content:space-between;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);font-size:13px;color:rgba(255,255,255,.35);flex-wrap:wrap;gap:12px}
+.footer-credit a{color:var(--a);text-decoration:none}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr}}
+ 
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease-out,transform .7s ease-out}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.lb{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);display:none;align-items:center;justify-content:center;cursor:zoom-out}
+.lb.active{display:flex;animation:fadeIn .3s}
+.lb img{max-width:90vw;max-height:90vh;border-radius:var(--r)}
+.lb-close{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);color:white;border:none;font-size:22px;cursor:pointer}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@media(max-width:640px){.container{padding:0 16px}.section{padding:64px 0}}
+</style>
+</head>
+<body>
+ 
+<nav class="nav"><div class="container nav-inner">
+  <div class="nav-brand">David Guillemand Taille de pierres</div>
+  <div class="nav-links">
+    <a href="#about">À propos</a><a href="#expertise">Expertise</a>
+    <a href="#method">Méthode</a><a href="#faq">FAQ</a>
+  </div>
+  <a href="#contact" class="nav-cta">Prendre contact →</a>
+</div></nav>
+ 
+<header class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Tailleur de pierre · Nantes</div>
+    <h1>L&#39;art de la pierre : savoir-faire et précision artisanale</h1>
+    <p class="hero-sub">Depuis Nantes, nous réalisons des ouvrages en pierre naturelle, de la restauration historique à la création contemporaine.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">Demander un devis</a>
+      <a href="#expertise" class="btn btn-ghost">Découvrir nos réalisations</a>
+    </div>
+  </div>
+  <div class="hero-visual"><img src="https://images.pexels.com/photos/29471224/pexels-photo-29471224.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="David Guillemand Taille de pierres"></div>
+</header>
+ 
+<div class="kf-bar"><div class="container kf-grid"><div class="kf-item"><div class="kf-value" data-count="25" data-suffix="ans">0</div><div class="kf-label">d&#39;expérience dans la taille de pierre</div></div><div class="kf-item"><div class="kf-value" data-count="50" data-suffix="Plus de">0</div><div class="kf-label">projets de restauration menés à Nantes et ses environs</div></div><div class="kf-item"><div class="kf-value" data-count="100" data-suffix="%">0</div><div class="kf-label">matériaux naturels et traçables utilisés</div></div><div class="kf-item"><div class="kf-value" data-count="5" data-suffix="étoiles">0</div><div class="kf-label">notation moyenne de satisfaction client</div></div></div></div>
+ 
+<section class="section" id="about"><div class="container">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <span class="section-label">À propos</span>
+      <h2 class="section-title">Notre savoir-faire en pierre</h2>
+      <p>David Guillemand Taille de pierres est votre artisan de confiance à Nantes. Spécialiste reconnu de la pierre naturelle, nous maîtrisons depuis des générations l&#39;art de la taille et de la pose. Notre expertise couvre la restauration de monuments historiques et la création d&#39;ouvrages modernes.</p>
+      <p>Notre approche allie le respect des techniques ancestrales à une vision contemporaine. Chaque projet est traité avec rigueur, passion, et un engagement total pour la durabilité des matériaux.</p>
+      <div class="about-certs"><div class="cert-item"><span class="cert-dot"></span>Artisan Maître Pierre de Taille</div><div class="cert-item"><span class="cert-dot"></span>Membre de la Chambre des Métiers et de l&#39;Artisanat</div><div class="cert-item"><span class="cert-dot"></span>Label Qualité Pierre Naturelle</div><div class="cert-item"><span class="cert-dot"></span>Partenariat avec les Architectes Historiques</div></div>
+    </div>
+    <div class="reveal"><div class="about-image"><img src="https://images.pexels.com/photos/33497138/pexels-photo-33497138.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" alt="David Guillemand Taille de pierres" loading="lazy"></div></div>
+  </div>
+  <div class="about-stats"><div class="stat reveal"><span class="stat-value">Maîtrise des techniques médiévales</span><span class="stat-label">Authenticité des méthodes</span></div><div class="stat reveal"><span class="stat-value">Conseil personnalisé</span><span class="stat-label">Accompagnement de A à Z</span></div><div class="stat reveal"><span class="stat-value">Pierre locale</span><span class="stat-label">Engagement écologique</span></div></div>
+</div></section>
+ 
+<section class="section section-alt" id="expertise"><div class="container">
+  <span class="section-label">Expertise</span>
+  <h2 class="section-title">Nos domaines d&#39;expertise</h2>
+  <p class="section-subtitle">Une expertise au service de vos besoins</p>
+  <div class="expertise-list">
+    <div class="expertise-item reveal" style="transition-delay:0ms">
+      <div class="exp-num">01</div>
+      <div class="exp-content">
+        <h3 class="exp-title">Taille de pierre traditionnelle</h3>
+        <p class="exp-desc">Nous réalisons la taille de pierre à la commande, en respectant les canons esthétiques et structurels des périodes passées. De la sélection du bloc à la finition, notre savoir-faire garantit une pierre d&#39;une qualité irréprochable.</p>
+      </div>
+    </div>
+    <div class="expertise-item reveal" style="transition-delay:60ms">
+      <div class="exp-num">02</div>
+      <div class="exp-content">
+        <h3 class="exp-title">Restauration de monuments et façades</h3>
+        <p class="exp-desc">Sauvegarder le patrimoine, c&#39;est notre vocation. Nous intervenons sur la restauration de façades et de monuments historiques, en utilisant des techniques et des matériaux compatibles avec l&#39;édifice d&#39;origine.</p>
+      </div>
+    </div>
+    <div class="expertise-item reveal" style="transition-delay:120ms">
+      <div class="exp-num">03</div>
+      <div class="exp-content">
+        <h3 class="exp-title">Appareillage de murs en pierre</h3>
+        <p class="exp-desc">L&#39;appareillage est l&#39;art de la maçonnerie en pierre. Nous concevons et posons des murs porteurs ou décoratifs avec une précision millimétrée, assurant stabilité et esthétique, qu&#39;il s&#39;agisse de murs de soutènement ou de cloisons.</p>
+      </div>
+    </div>
+    <div class="expertise-item reveal" style="transition-delay:180ms">
+      <div class="exp-num">04</div>
+      <div class="exp-content">
+        <h3 class="exp-title">Création d&#39;escaliers et balustrades en pierre</h3>
+        <p class="exp-desc">Des éléments architecturaux qui racontent une histoire. Nous créons des escaliers et balustrades sur mesure, alliant la solidité de la pierre à l&#39;élégance du design contemporain, tout en respectant les formes classiques.</p>
+      </div>
+    </div>
+    <div class="expertise-item reveal" style="transition-delay:240ms">
+      <div class="exp-num">05</div>
+      <div class="exp-content">
+        <h3 class="exp-title">Pose de matériaux naturels de revêtement</h3>
+        <p class="exp-desc">Pour un revêtement authentique et durable, nous posons une variété de matériaux naturels. Qu&#39;il s&#39;agisse de dallages, de revêtements de sol ou de parements, nous garantissons une intégration parfaite au bâti existant.</p>
+      </div>
+    </div></div>
+</div></section>
+ 
+<section class="section" id="method"><div class="container">
+  <span class="section-label">Notre approche</span>
+  <h2 class="section-title">Notre méthode de travail artisanale</h2>
+  <p class="section-subtitle" style="margin-bottom:40px">Un accompagnement structuré, transparent, orienté résultats.</p>
+  <div class="method-grid">
+    <div class="method-step reveal">
+      <div class="method-num">01</div>
+      <div class="method-content">
+        <h3 class="method-title">Diagnostic et étude du bâti</h3>
+        <p class="method-desc">Nous commençons par une visite détaillée de votre site. Nous analysons l&#39;état des pierres, identifions les besoins structurels et définissons ensemble les objectifs esthétiques de votre projet.</p>
+      </div>
+    </div>
+    <div class="method-step reveal">
+      <div class="method-num">02</div>
+      <div class="method-content">
+        <h3 class="method-title">Proposition sur mesure</h3>
+        <p class="method-desc">Un devis détaillé et précis est établi. Nous vous présentons des matériaux adaptés, des plans techniques et des options de design, garantissant une solution tant esthétique que pérenne.</p>
+      </div>
+    </div>
+    <div class="method-step reveal">
+      <div class="method-num">03</div>
+      <div class="method-content">
+        <h3 class="method-title">Réalisation par l&#39;artisan</h3>
+        <p class="method-desc">Nos artisans mettent en œuvre leur savoir-faire unique. La taille, le façonnage et la pose se font avec le plus grand soin, respectant les temps et les gestes traditionnels.</p>
+      </div>
+    </div>
+    <div class="method-step reveal">
+      <div class="method-num">04</div>
+      <div class="method-content">
+        <h3 class="method-title">Finitions et réception</h3>
+        <p class="method-desc">Après la pose, nous réalisons les finitions parfaites et vous accompagnons lors de la réception du chantier. Un ouvrage solide, beau, et conçu pour traverser le temps.</p>
+      </div>
+    </div></div>
+</div></section>
+ 
+<section class="section section-alt" id="testimonials"><div class="container">
+  <span class="section-label">Témoignages</span>
+  <h2 class="section-title">Ce que disent nos clients</h2>
+  <div class="testimonials-grid" style="margin-top:40px"><div class="testimonial reveal"><div class="t-open-quote">"</div><p class="t-text">Le travail de David Guillemand est d&#39;une précision remarquable. Pour la restauration de notre façade historique, son respect des techniques anciennes a été déterminant. Un artisan passionné et d&#39;une grande fiabilité.</p><div class="t-author"><div class="t-initials">É</div><div><div class="t-name">Éloïse L.</div><div class="t-role">Architecte Paysagiste, Agence Patrimoine</div></div></div></div><div class="testimonial reveal"><div class="t-open-quote">"</div><p class="t-text">Nous avons fait appel à leur expertise pour un escalier intérieur complexe. Le rendu est magnifique, alliant tradition et modernité. Un vrai savoir-faire qui fait la différence.</p><div class="t-author"><div class="t-initials">M</div><div><div class="t-name">Marc D.</div><div class="t-role">Maître d&#39;ouvrage, Résidence privée</div></div></div></div><div class="testimonial reveal"><div class="t-open-quote">"</div><p class="t-text">Un accompagnement de A à Z, du diagnostic à la pose. Leur connaissance des matériaux naturels et leur rigueur sont exemplaires. Nous recommandons vivement leur expertise.</p><div class="t-author"><div class="t-initials">J</div><div><div class="t-name">Julien P.</div><div class="t-role">Bâtisseur, Chantier neuf</div></div></div></div></div>
+</div></section>
+ 
+<section class="section" id="faq"><div class="container">
+  <span class="section-label">FAQ</span>
+  <h2 class="section-title" style="text-align:center;margin:0 auto 48px">Questions fréquentes</h2>
+  <div class="faq-wrap reveal"><div class="faq-item"><button class="faq-q">Quel type de pierre est le mieux adapté à ma restauration ?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Le choix de la pierre dépend de l&#39;origine et du type de bâti. Nous procédons toujours à une analyse approfondie pour garantir la compatibilité des matériaux, assurant ainsi la pérennité et l&#39;authenticité de votre restauration.</div></div></div><div class="faq-item"><button class="faq-q">Quelle est la différence entre la pierre naturelle et les matériaux reconstitués ?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">La pierre naturelle offre une authenticité et une résistance inégalées, essentielle pour les monuments historiques. Nous privilégions toujours les matériaux naturels et traçables, garantissant une intégration parfaite et durable.</div></div></div><div class="faq-item"><button class="faq-q">Combien de temps faut-il pour un projet de taille de pierre ?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Le délai varie énormément selon l&#39;ampleur et la complexité de l&#39;ouvrage. Nous vous fournirons un planning détaillé et réaliste après le diagnostic initial, en respectant le rythme de l&#39;artisanat de qualité.</div></div></div><div class="faq-item"><button class="faq-q">Travaillez-vous uniquement sur des chantiers historiques ?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Notre expertise est polyvalente. Si nous excellons dans la restauration, nous sommes tout aussi à l&#39;aise pour créer des installations modernes et sur mesure, alliant tradition et esthétique contemporaine.</div></div></div><div class="faq-item"><button class="faq-q">Quels types de pierres gérez-vous ?<span class="faq-icon"></span></button><div class="faq-a"><div class="faq-a-inner">Nous travaillons avec une variété de pierres locales et régionales (calcaire, grès, etc.). Notre connaissance approfondie des matériaux nous permet de conseiller la meilleure option pour votre environnement et votre projet.</div></div></div></div>
+</div></section>
+ 
+<section class="section section-alt" id="contact"><div class="container">
+  <div class="contact-grid">
+    <div class="reveal">
+      <span class="contact-label">Contact</span>
+      <h2 class="section-title">Votre projet en pierre commence ici</h2>
+      <p style="color:var(--tm);margin-bottom:8px">Échangeons de manière confidentielle sur votre vision. Un conseil d&#39;expert vous attend.</p>
+      <div class="contact-items"><div class="contact-item"><span class="ci-icon">☎</span><a href="tel:0669663789">0669663789</a></div><div class="contact-item"><span class="ci-icon">✉</span><a href="mailto:Non disponible">Non disponible</a></div><div class="contact-item"><span class="ci-icon">⧈</span><span>2 Pl. de la Rochelle, 44200 Nantes</span></div></div>
+      <div class="contact-hours">
+        <div class="contact-hours-title">Disponibilités</div><div class="hours-row"><span class="hours-day">Lundi - Vendredi</span><span class="hours-time">09h00 - 18h00</span></div><div class="hours-row"><span class="hours-day">Samedi</span><span class="hours-time">Sur rendez-vous</span></div><div class="hours-row"><span class="hours-day">Dimanche</span><span class="hours-time">Fermé</span></div>
+      </div>
+    </div>
+    <div id="map" class="reveal"></div>
+  </div>
+</div></section>
+ 
+<footer class="footer"><div class="container">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">David Guillemand Taille de pierres</div>
+      <p class="footer-tagline">Le savoir-faire de la pierre, entre tradition et modernité.</p>
+    </div>
+    <div class="footer-col"><div class="footer-col-title">Navigation</div><ul><li><a href="#">À propos</a></li><li><a href="#">Expertise</a></li><li><a href="#">Notre méthode</a></li><li><a href="#">FAQ</a></li></ul></div>
+    <div class="footer-col"><div class="footer-col-title">Contact</div><ul>
+      <li><a href="tel:0669663789">0669663789</a></li>
+      <li><a href="mailto:Non disponible">Non disponible</a></li>
+    </ul></div>
+    <div class="footer-col"><div class="footer-col-title">Légal</div><ul><li><a href="#">Mentions légales</a></li><li><a href="#">Confidentialité</a></li><li><a href="#">RGPD</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 David Guillemand Taille de pierres. Tous droits réservés.</div>
+    <div class="footer-credit">Site réalisé par <a href="https://synaris.fr">Synaris</a></div>
+  </div>
+</div></footer>
+ 
+<div class="floating-actions">
+  <a href="https://wa.me/33669663789?text=Bonjour" class="float-btn float-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+  </a>
+  <a href="#" class="float-btn float-top" id="floatTop" aria-label="Haut"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5m0 0l-7 7m7-7l7 7"/></svg></a>
+</div>
+ 
+<div class="lb" id="lb"><button class="lb-close">×</button><img id="lbImg" src="" alt=""></div>
+ 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const ft=document.getElementById('floatTop');
+window.addEventListener('scroll',()=>{ft.classList.toggle('visible',scrollY>400);});
+ft.onclick=e=>{e.preventDefault();scrollTo({top:0,behavior:'smooth'});};
+const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('visible');if(e.target.classList.contains('kf-item')){const el=e.target.querySelector('.kf-value');if(el&&el.hasAttribute('data-count')){const tgt=parseInt(el.dataset.count,10)||0;const sfx=el.dataset.suffix||'';const dur=1400,st=performance.now();const tick=n=>{const pp=Math.min((n-st)/dur,1),ease=1-Math.pow(1-pp,3);el.textContent=Math.floor(tgt*ease)+sfx;if(pp<1)requestAnimationFrame(tick);else el.textContent=tgt+sfx;};requestAnimationFrame(tick);}}if(e.target.classList.contains('stat')){const el=e.target.querySelector('.stat-value');if(el&&el.hasAttribute('data-count')){const tgt=parseInt(el.dataset.count,10)||0;const sfx=el.dataset.suffix||'';const dur=1400,st=performance.now();const tick=n=>{const pp=Math.min((n-st)/dur,1),ease=1-Math.pow(1-pp,3);el.textContent=Math.floor(tgt*ease)+sfx;if(pp<1)requestAnimationFrame(tick);else el.textContent=tgt+sfx;};requestAnimationFrame(tick);}}io.unobserve(e.target);}),{threshold:.12});
+document.querySelectorAll('.reveal,.kf-item').forEach(el=>io.observe(el));
+document.querySelectorAll('.faq-q').forEach(btn=>{btn.onclick=()=>{const item=btn.parentElement,a=item.querySelector('.faq-a'),active=item.classList.contains('active');document.querySelectorAll('.faq-item').forEach(i=>{i.classList.remove('active');i.querySelector('.faq-a').style.maxHeight='0';});if(!active){item.classList.add('active');a.style.maxHeight=a.scrollHeight+'px';};};});
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+lb.onclick=()=>lb.classList.remove('active');
+if(typeof L!=='undefined'){const map=L.map('map',{scrollWheelZoom:false}).setView([47.1959736,-1.5444017],14);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19}).addTo(map);const icon=L.divIcon({className:'',html:'<div style="background:#B8860B;width:28px;height:28px;border-radius:50%;border:3px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.3)"></div>',iconSize:[28,28],iconAnchor:[14,14]});L.marker([47.1959736,-1.5444017],{icon}).addTo(map).bindPopup('<b>David Guillemand Taille de pierres</b><br>2 Pl. de la Rochelle, 44200 Nantes');}
+</script>
+</body></html>
